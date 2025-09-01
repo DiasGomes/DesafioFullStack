@@ -1,18 +1,15 @@
 package com.empresaFicticia.DesafioFullStack.controller;
 
+import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import com.empresaFicticia.DesafioFullStack.entity.Empresa;
-import com.empresaFicticia.DesafioFullStack.repository.EmpresaRepository;
+import com.empresaFicticia.DesafioFullStack.entity.Fornecedor;
+import com.empresaFicticia.DesafioFullStack.repository.FornecedorRepository;
 
 @RestController
 @RequestMapping("/empresa")
@@ -20,16 +17,16 @@ import com.empresaFicticia.DesafioFullStack.repository.EmpresaRepository;
 public class EmpresaController {
 
     @Autowired
-    private EmpresaRepository empresaRepository;
+    private FornecedorRepository fornecedorRepository;
 
-    @GetMapping
-    public List<Empresa> getAllEmpresas() {
-        return empresaRepository.findAll();
+    @GetMapping("/{id}")
+    public List<Fornecedor> getAllFornecedor() {
+        return fornecedorRepository.findAll();
     }
 
     @PostMapping
-    public Empresa createFornecedor(@RequestBody Empresa body) {
-        return empresaRepository.save(body);
+    public Fornecedor createFornecedor(@RequestBody Fornecedor body) {
+        return fornecedorRepository.save(body);
     }
 
 }

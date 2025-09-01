@@ -25,10 +25,12 @@ public class Empresa {
         this.cep = cep;
     }
 
+    public Long getId() {return id;}
     public String getCNPJ() {return cnpj;}
     public String getNomeFantasia() {return nomeFantasia;}
     public String getCEP() {return cep;}
 
+    public void setId(Long id) {this.id = id;}
     public void setCNPJ(String cnpj) {this.cnpj = cnpj;}
     public void setNomeFantasia(String nomeFantasia) {this.nomeFantasia = nomeFantasia;}
     public void setCEP(String cep) {this.cep = cep;}

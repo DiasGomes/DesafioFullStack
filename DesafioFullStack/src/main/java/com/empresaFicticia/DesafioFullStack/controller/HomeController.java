@@ -1,35 +1,32 @@
 package com.empresaFicticia.DesafioFullStack.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.empresaFicticia.DesafioFullStack.repository.FornecedorRepository;
-
 import java.util.List;
-
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import com.empresaFicticia.DesafioFullStack.repository.EmpresaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import com.empresaFicticia.DesafioFullStack.entity.Fornecedor;
+import com.empresaFicticia.DesafioFullStack.entity.Empresa;
 
 @RestController
-@RequestMapping("/fornecedor")
+@RequestMapping("/home")
 @CrossOrigin(origins = "http://localhost:5173")
 public class HomeController {
 
     @Autowired
-    private FornecedorRepository fornecedorRepository;
+    private EmpresaRepository empresaRepository;
 
-    @GetMapping
-    public List<Fornecedor> getAllFornecedores() {
-        return fornecedorRepository.findAll();
-    }
-
-    @PostMapping
-    public Fornecedor createFornecedor(@RequestBody Fornecedor body) {
-        return fornecedorRepository.save(body);
+    @GetMapping("/search")
+    public List<Empresa> getAllEmpresas(
+        @RequestParam(value="q", defaultValue = "") String query,
+        @RequestParam(value="noc", defaultValue = "true") Boolean nameOrCnpj 
+    ) {
+        if(!nameOrCnpj){
+            return empresaRepository.findByCnpjContaining(query);
+        }
+        return empresaRepository.findByNomeFantasiaContaining(query);
     }
 
 }

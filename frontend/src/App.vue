@@ -1,12 +1,12 @@
 <script setup>
 
-import Fornecedores from './components/Fornecedores.vue'
+import Empresas from './components/Empresa.vue'
 
 </script>
 
 <template>
   <div class="card">
-    <Fornecedores />
+    <Empresas />
   </div>
 </template>
 
