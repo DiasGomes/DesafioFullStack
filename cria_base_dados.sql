@@ -45,7 +45,7 @@ VALUES
 (10, '44440987654321', 'Leslie Corp', 'Leslie@Corp.com', '01234560', null, null),
 (11, '77210987654321', 'Ben 11', 'ben@Corp.com', '31234563', null, null),
 (12, '77310987654321', 'Andy Toys', 'buzz@Corp.com', '41234564', null, null),
-(13, '99210987654321', 'a empresa do malvado doofenshmirtz', 'perry@Corp.com', '51234565', null, null),
+(13, '99210987654321', 'A empresa do malvado doofenshmirtz', 'perry@Corp.com', '51234565', null, null),
 (14, '99910987654321', 'Ronaldo Corp', 'fenomeno@Corp.com', '77234567', null, null);
 
 
@@ -56,7 +56,7 @@ VALUES
 (3, '444210987654321', 'Tom & Jerry', '21234562'),
 (4, '77210987654321', 'Ben 11', '31234563'),
 (5, '77310987654321', 'Andy Toys', '41234564'),
-(6, '99210987654321', 'a empresa do malvado doofenshmirtz', '51234565'),
+(6, '99210987654321', 'A empresa do malvado doofenshmirtz', '51234565'),
 (7, '99910987654321', 'Ronaldo Corp', '77234567');
 
 INSERT INTO empresa_fornecedor (id, id_empresa, id_fornecedor)

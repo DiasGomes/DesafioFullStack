@@ -1,8 +1,12 @@
 <template>
   <div v-if="empresa">
 
-    <div class="btn-home">
+    <div class="btn" id="btn-home">
       <router-link to="/">Home</router-link>
+    </div>
+
+    <div class="btn" id="btn-cadastrar">
+      <button @click="abrirFormulario">Cadastrar Fornecedor</button>
     </div>
 
     <div class="content-block"> 
@@ -51,17 +55,24 @@
 
     </div>
 
+    <Cadastra
+      :mostrar="mostrarFormulario" 
+      @fechar="fecharFormulario" 
+    />
   </div>
 </template>
 
 <script>
 import EmpresaService from '../services/EmpresaService';
+import Cadastra from './Cadastra.vue';
 
 export default {
+  components: { Cadastra },
   props: ['id'],
   data() {
     return {
-      empresa: null
+      empresa: null,
+      mostrarFormulario: false
     };
   },
   created() {
@@ -99,18 +110,30 @@ export default {
           .replace(/(\d{2})(\d)/, "$1.$2")
           .replace(/(\d{3})(\d{2})/, "$1-$2");
     },
+    abrirFormulario() {
+      this.mostrarFormulario = true;
+    },
+    fecharFormulario() {
+      this.mostrarFormulario = false;
+    }
   }
 };
 </script>
 
 <style scoped>
-.btn-home {
+#btn-home {
   position: absolute;
   top: 2rem;
   left: 1rem;
 }
 
-.btn-home a {
+#btn-cadastrar {
+  position: absolute;
+  top: 2rem;
+  right: 1rem;
+}
+
+.btn a, button {
   text-decoration: none;
   padding: 0.6rem 1rem;
   background: #007bff;
@@ -119,7 +142,7 @@ export default {
   font-weight: bold;
 }
 
-.btn-home a:hover {
+.btn a:hover, button:hover {
   background: #0056b3;
 }
 
@@ -184,14 +207,14 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin: 0 auto;           /* Centraliza horizontalmente */
-  max-width: 600px;         /* Largura fixa para alinhar */
-  text-align: center;       /* Centraliza o texto */
+  margin: 0 auto;         
+  max-width: 600px;
+  text-align: center;
 }
 
 .block-fornecedor .row {
   display: grid;
-  grid-template-columns: 150px 1fr; /* "coluna label" + "coluna valor" */
+  grid-template-columns: 150px 1fr;
   gap: 1rem;
   justify-content: center;
   align-items: center;
@@ -199,7 +222,7 @@ export default {
 
 .block-fornecedor strong {
   color: #ffffff;
-  text-align: right;        /* Alinha os labels à direita */
+  text-align: right; 
 }
 
 </style>
