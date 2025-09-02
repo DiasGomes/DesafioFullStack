@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 import com.empresaFicticia.DesafioFullStack.entity.Empresa;
 import com.empresaFicticia.DesafioFullStack.repository.EmpresaRepository;
 import com.empresaFicticia.DesafioFullStack.entity.Fornecedor;
@@ -16,7 +17,11 @@ import com.empresaFicticia.DesafioFullStack.repository.FornecedorRepository;
 
 @RestController
 @RequestMapping("/empresa")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(
+    origins = "http://localhost:5173", 
+    allowedHeaders = "*", 
+    methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS}
+    )
 public class EmpresaController {
 
     @Autowired
@@ -32,7 +37,7 @@ public class EmpresaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("")
     public Fornecedor createFornecedor(@RequestBody Fornecedor body) {
         return fornecedorRepository.save(body);
     }

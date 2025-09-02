@@ -11,7 +11,7 @@ public class Empresa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 14, nullable = false, unique = true)
+    @Column(length = 15, nullable = false, unique = true)
     private String cnpj;
     @Column(nullable = false)
     private String nomeFantasia;

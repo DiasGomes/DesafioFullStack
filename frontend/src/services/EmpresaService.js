@@ -13,6 +13,11 @@ class EmpresaService {
             params: { q: query, noc: nameOrCnpj }
         });
     }
+
+    createFornecedor(fornecedor) {
+        return axios.post(EMPRESA_API_URL, fornecedor);
+    }
+
 }
 
 export default new EmpresaService();

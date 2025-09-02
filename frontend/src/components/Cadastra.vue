@@ -3,47 +3,76 @@
     <div class="modal-content">
       <h2>Cadastrar Fornecedor</h2>
 
-      <form class="formulario">
+      <form class="formulario" @submit.prevent="cadastrarFornecedor">
         <div>
           <label>Nome:</label>
-          <input type="text" placeholder="Digite o nome" />
+          <input type="text" v-model="novoFornecedor.nome" placeholder="Digite o nome" />
         </div>
         <div>
           <label>CPF/CNPJ:</label>
-          <input type="text" placeholder="Digite o CPF ou CNPJ" />
+          <input type="text" v-model="novoFornecedor.cpfCnpj" placeholder="Digite o CPF ou CNPJ" />
         </div>
         <div>
           <label>CEP:</label>
-          <input type="cep" placeholder="Digite o CEP" />
+          <input type="text" v-model="novoFornecedor.cep" placeholder="Digite o CEP" />
         </div>
         <div>
           <label>Email:</label>
-          <input type="email" placeholder="Digite o e-mail" />
+          <input type="text" v-model="novoFornecedor.email" placeholder="Digite o e-mail" />
         </div>
         <div>
           <label>RG:</label>
-          <input type="email" placeholder="Digite o RG" />
+          <input type="text" v-model="novoFornecedor.rg" placeholder="Digite o RG" />
         </div>
         <div>
           <label>Data de Nascimento</label>
-          <input type="email" placeholder="Digite a Data de Nascimento" />
+          <input type="date" v-model="novoFornecedor.dataNascimento" placeholder="Digite a Data de Nascimento" />
         </div>
-      </form>
-      <div class="botoes-form">
-        <button class="btn-form" id="btn-fechar" @click="$emit('fechar')">Cancelar</button>
-        <button class="btn-form" id="btn-cadastrar" @click="$emit('cedastrar')">Cadastrar</button>
+        <div class="botoes-form">
+            <button type="submit" class="btn-form" id="btn-cadastrar">Cadastrar</button>
+            <button class="btn-form" id="btn-fechar" @click="$emit('fechar')">Cancelar</button>
       </div>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
+
+import EmpresaService from '../services/EmpresaService';
+
 export default {
-  name: "FornecedorModal",
+  name: "Cadastra",
   props: {
     mostrar: {
       type: Boolean,
       default: false
+    }
+  },
+  data() {
+    return {
+      novoFornecedor: {
+        nome: '',
+        cpfCnpj: '',
+        email: '',
+        cep: '',
+        rg: '',
+        dataNascimento: ''
+      }
+    };
+  },
+  methods: {
+    cadastrarFornecedor() {
+        console.log("apertou")
+        console.log(this.novoFornecedor)
+      EmpresaService.createFornecedor(this.novoFornecedor)
+        .then(() => {
+          this.$emit('cadastrar');
+          this.$emit('fechar');
+        })
+        .catch(err => {
+          console.error('Erro ao cadastrar fornecedor:', err);
+        });
     }
   }
 };

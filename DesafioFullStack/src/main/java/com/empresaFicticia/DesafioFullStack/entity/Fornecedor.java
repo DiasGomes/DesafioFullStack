@@ -15,7 +15,7 @@ public class Fornecedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 14, nullable = false, unique = true)
+    @Column(length = 15, nullable = false, unique = true)
     private String cpfCnpj;
     @Column(nullable = false)
     private String nome;
