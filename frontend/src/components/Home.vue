@@ -14,7 +14,7 @@
     <ul v-if="empresas.length">
       <li v-for="empresa in empresas" :key="empresa.id">
         <router-link :to="`/empresa/${empresa.id}`">
-          {{ empresa.nomeFantasia }} - {{ empresa.cnpj }} - {{ empresa.cep }}
+          {{ empresa.nomeFantasia }} - {{ empresa.cnpj }}
         </router-link>
       </li>
     </ul>

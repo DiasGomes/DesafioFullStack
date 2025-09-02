@@ -1,7 +1,11 @@
 package com.empresaFicticia.DesafioFullStack.entity;
 
-import java.time.LocalDate;
+import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.time.LocalDate;
+import java.util.HashSet;
 import jakarta.persistence.*;
 
 @Entity
@@ -23,6 +27,9 @@ public class Fornecedor {
     private String rg;
     @Column
     private LocalDate dataNascimento;
+    @ManyToMany(mappedBy = "fornecedores")
+    @JsonIgnore
+    private Set<Empresa> empresas = new HashSet<>();
 
     public Fornecedor() {}
 
@@ -43,6 +50,7 @@ public class Fornecedor {
     public String getCEP() {return cep;}
     public String getRg() {return rg;}
     public LocalDate getDataNascimento() {return dataNascimento;}
+    public Set<Empresa> getEmpresas() {return empresas;}
 
     public void setId(Long id) {this.id = id;}
     public void setCpfCnpj(String cpfCnpj) {this.cpfCnpj = cpfCnpj;}
@@ -51,5 +59,6 @@ public class Fornecedor {
     public void setCEP(String cep) {this.cep = cep;}
     public void setRg(String rg) {this.rg = rg;}
     public void setDataNascimento(LocalDate dataNascimento) {this.dataNascimento = dataNascimento;}
+    public void setEmpresas(Set<Empresa> empresas) {this.empresas = empresas;}
 
 }
