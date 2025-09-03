@@ -59,6 +59,7 @@
 
     <Cadastra
       :mostrar="mostrarFormulario" 
+      :empresa="empresa"
       @fechar="fecharFormulario" 
       @cadastrar="recarregarEmpresa"
     />
@@ -75,7 +76,7 @@ export default {
   data() {
     return {
       empresa: null,
-      mostrarFormulario: false
+      mostrarFormulario: false,
     };
   },
   created() {

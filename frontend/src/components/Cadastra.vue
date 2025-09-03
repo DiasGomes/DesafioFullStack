@@ -19,23 +19,23 @@
         </div>
         <div class="pessoa-fisica" v-if="ehPF=='true'">
           <div>
-            <label>CPF:</label>
+            <label>CPF*:</label>
             <MaskInput  type="text" mask="###.###.###-##"
-              v-model="novoFornecedor.cpfCnpj" placeholder="Digite o CPF" />
+              v-model="novoFornecedor.cpfCnpj" placeholder="###.###.###-##" />
           </div>
         </div>
         <div class="pessoa-juridica" v-else>
           <div>
-            <label>CNPJ:</label>
+            <label>CNPJ*:</label>
             <MaskInput type="text" mask="##.###.###/####-##" 
-              v-model="novoFornecedor.cpfCnpj" placeholder="Digite o CNPJ" />
+              v-model="novoFornecedor.cpfCnpj" placeholder="##.###.###/####-##" />
           </div>
         </div>
     
         <div>
-          <label>CEP:</label>
-          <MaskInput type="text" mask="##.###-###" 
-            v-model="novoFornecedor.cep" placeholder="Digite o CEP" />
+          <label>CEP*:</label>
+          <MaskInput type="text" mask="#####-###" 
+            v-model="novoFornecedor.cep" placeholder="#####-###" />
         </div>
         <div>
           <label>Email:</label>
@@ -46,7 +46,7 @@
           <div>
             <label>RG:</label>
             <MaskInput type="text" mask="AA-###.###.###"  
-              v-model="novoFornecedor.rg" placeholder="Digite o RG" />
+              v-model="novoFornecedor.rg" placeholder="UF-###.###.###" />
           </div>
           <div>
             <label>Data de Nascimento</label>
@@ -75,7 +75,8 @@ export default {
     mostrar: {
       type: Boolean,
       default: false
-    }
+    },
+    empresa: null
   },
   components: {
     MaskInput,
@@ -114,7 +115,7 @@ export default {
         error = "E-mail não prenchido!"
       }else if(this.novoFornecedor.cep.length === 0){
         error = "CEP não prenchido!"
-      }else if(this.novoFornecedor.cep.length < 10){
+      }else if(this.novoFornecedor.cep.length < 9){
         error = "CEP incompleto!"
       }else{
         if(this.ehPF === "false"){
@@ -136,6 +137,19 @@ export default {
             error = "CPF incompleto!"
           }
         }
+
+        var cepResponse = this.httpGet(this.novoFornecedor.cep)
+        if(cepResponse.erro === 'true'){
+          error = "CEP inválido!"
+        }
+        var cepResponse = this.httpGet(this.empresa.cep)
+        console.log("CEP"+ this.empresa.cep +" UF "+ cepResponse.uf)
+        var idade = this.calcularIdade(this.novoFornecedor.dataNascimento)
+        console.log(this.novoFornecedor.dataNascimento +" Idade "+ idade)
+        if((cepResponse.uf === "PR") && (idade < 18)){
+            error = "Empresa do Paraná, não pode cadastrar um fornecedor pessoa física menor de idade"
+        }
+
       }
       return error;
     },
@@ -151,7 +165,7 @@ export default {
         .then(() => {
           this.$emit('cadastrar');
           this.$emit('fechar');
-          resetForm();
+          this.resetForm();
         })
         .catch(err => {
           console.error('Erro ao cadastrar fornecedor:', err);
@@ -162,6 +176,34 @@ export default {
       this.resetForm();
       this.$emit("fechar"); 
     },
+    httpGet(cep)
+    {
+        var xmlHttp = new XMLHttpRequest();
+        var cepOnlyNumbers = cep.replace("-", "")
+        var theUrl = "http://viacep.com.br/ws/"+cepOnlyNumbers+"/json/"
+        xmlHttp.open( "GET", theUrl, false );
+        xmlHttp.send( null );
+        return JSON.parse(xmlHttp.responseText);
+    },
+    calcularIdade(dataNascimentoStr) {
+        const partes = dataNascimentoStr.split("-");
+        const dia = parseInt(partes[2], 10);
+        const mes = parseInt(partes[1], 10) - 1; 
+        const ano = parseInt(partes[0], 10);
+
+        const dataNascimento = new Date(ano, mes, dia);
+        const hoje = new Date();
+
+        let idade = hoje.getFullYear() - dataNascimento.getFullYear();
+        const mesAtual = hoje.getMonth();
+        const diaAtual = hoje.getDate();
+
+        if (mesAtual < mes || (mesAtual === mes && diaAtual < dia)) {
+            idade--;
+        }
+
+        return idade;
+    }
   }
 };
 </script>
