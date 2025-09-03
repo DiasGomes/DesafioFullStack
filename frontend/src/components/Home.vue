@@ -2,7 +2,12 @@
   <div class="empresa-search">
     <div class="content-block"> 
       <h1>Desafio Full-Stack</h1>
-      <input class="barra-pesquisa" v-model="query" placeholder="Digite nome fantasia ou CNPJ da empresa" @keyup.enter="buscar" />
+
+      <MaskInput v-if="nameOrCnpj=='false'" class="barra-pesquisa" mask="##.###.###/####-##" 
+        v-model="query" placeholder="Digite CNPJ da empresa" @keyup.enter="buscar" />
+      <input v-else class="barra-pesquisa" v-model="query" 
+        placeholder="Digite nome fantasia da empresa" @keyup.enter="buscar" />
+      
       <div class="btn-radio"> 
         <label>
           <input type="radio" value="true" v-model="nameOrCnpj" />

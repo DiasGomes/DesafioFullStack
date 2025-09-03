@@ -5,9 +5,9 @@
 
       <div class="btn-radio"> 
         <label>
-          <input type="radio" value="true" v-model="ehPF" />
+          <input type="radio" value="true" v-model="ehPF" @click="resetForm"/>
           Pessoa Física
-          <input type="radio" value="false" v-model="ehPF" />
+          <input type="radio" value="false" v-model="ehPF" @click="resetForm"/>
           Pessoa Jurídica
         </label>
       </div>
@@ -56,8 +56,9 @@
 
         <div class="botoes-form">
             <button type="submit" class="btn-form" id="btn-cadastrar">Cadastrar</button>
-            <button class="btn-form" id="btn-fechar" @click="$emit('fechar')">Cancelar</button>
+            <button class="btn-form" id="btn-fechar" @click="fecharFormulario">Cancelar</button>
       </div>
+      <p v-if="erro" class="erro erro-interno">{{ erro }}</p>
       </form>
     </div>
   </div>
@@ -89,25 +90,78 @@ export default {
         rg: null,
         dataNascimento: ''
       },
-      ehPF: "false"
+      ehPF: "false",
+      erro: null
     };
   },
   methods: {
+    resetForm() {
+      this.novoFornecedor = {
+        nome: "",
+        cpfCnpj: "",
+        email: "",
+        cep: "",
+        rg: null,
+        dataNascimento: ""
+      };
+      this.erros = null;
+    },
+    checkForm(){
+      var error = null
+      if(this.novoFornecedor.nome.length === 0){
+        error = "Nome não prenchido!"
+      }else if(this.novoFornecedor.email.length === 0){
+        error = "E-mail não prenchido!"
+      }else if(this.novoFornecedor.cep.length === 0){
+        error = "CEP não prenchido!"
+      }else if(this.novoFornecedor.cep.length < 10){
+        error = "CEP incompleto!"
+      }else{
+        if(this.ehPF === "false"){
+          if(this.novoFornecedor.cpfCnpj.length === 0){
+            error = "CNPJ não prenchido!"
+          }else if(this.novoFornecedor.cpfCnpj.length < 18){
+            error = "CNPJ incompleto!"
+          }
+        }else{
+          if(this.novoFornecedor.rg === null){
+            error = "RG não prenchido!"
+          }else if(this.novoFornecedor.rg.length < 13){
+            error = "RG incompleto!"
+          }else if(this.novoFornecedor.dataNascimento.length === 0){
+            error = "Data de Nascimento não prenchida!"
+          }else if(this.novoFornecedor.cpfCnpj.length === 0){
+            error = "CPF não prenchido!"
+          }else if(this.novoFornecedor.cpfCnpj.length < 14){
+            error = "CPF incompleto!"
+          }
+        }
+      }
+      return error;
+    },
     cadastrarFornecedor() {
       const payload = {
         fornecedor: this.novoFornecedor,
         empresaId: this.$route.params.id
       }
-      console.log(payload);
+      this.erro = this.checkForm();
+      console.log(this.erro)
+      if (this.erro !== null) {return ;}
       EmpresaService.createFornecedor(payload)
         .then(() => {
           this.$emit('cadastrar');
           this.$emit('fechar');
+          resetForm();
         })
         .catch(err => {
           console.error('Erro ao cadastrar fornecedor:', err);
+          this.erro.internal = "Erro interno no servidor. Tente novamente.";
         });
-    }
+    },
+    fecharFormulario() {
+      this.resetForm();
+      this.$emit("fechar"); 
+    },
   }
 };
 </script>
