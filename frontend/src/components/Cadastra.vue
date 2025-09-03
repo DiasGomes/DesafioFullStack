@@ -58,7 +58,7 @@
             <button type="submit" class="btn-form" id="btn-cadastrar">Cadastrar</button>
             <button class="btn-form" id="btn-fechar" @click="fecharFormulario">Cancelar</button>
       </div>
-      <p v-if="erro" class="erro erro-interno">{{ erro }}</p>
+      <p v-if="erro" class="erro">{{ erro }}</p>
       </form>
     </div>
   </div>
@@ -168,8 +168,12 @@ export default {
           this.resetForm();
         })
         .catch(err => {
+          this.erro = "Erro interno no servidor. Tente novamente.";
           console.error('Erro ao cadastrar fornecedor:', err);
-          this.erro.internal = "Erro interno no servidor. Tente novamente.";
+          if(err.name === "AxiosError"){
+            this.erro = "Erro! CPF/CNPJ já existente";
+          }
+          
         });
     },
     fecharFormulario() {
@@ -278,6 +282,11 @@ input{
 
 div.pessoa-fisica, div.pessoa-juridica{
   margin-bottom: 0;
+}
+
+.erro{
+  color: #dc3545;
+  font-weight: bold;
 }
 
 </style>

@@ -6,6 +6,7 @@
     </div>
 
     <div class="btn" id="btn-cadastrar">
+      <button @click="abrirVinculo">Vincular Fornecedor</button>
       <button @click="abrirFormulario">Cadastrar Fornecedor</button>
     </div>
 
@@ -115,6 +116,10 @@ export default {
   position: absolute;
   top: 2rem;
   right: 1rem;
+}
+
+#btn-cadastrar button{
+  margin: 0 10px;
 }
 
 .btn a, button {
