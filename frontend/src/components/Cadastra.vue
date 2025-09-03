@@ -3,15 +3,33 @@
     <div class="modal-content">
       <h2>Cadastrar Fornecedor</h2>
 
+      <div class="btn-radio"> 
+        <label>
+          <input type="radio" value="true" v-model="ehPF" />
+          Pessoa Física
+          <input type="radio" value="false" v-model="ehPF" />
+          Pessoa Jurídica
+        </label>
+      </div>
+
       <form class="formulario" @submit.prevent="cadastrarFornecedor">
         <div>
           <label>Nome:</label>
           <input type="text" v-model="novoFornecedor.nome" placeholder="Digite o nome" />
         </div>
-        <div>
-          <label>CPF/CNPJ:</label>
-          <input type="text" v-model="novoFornecedor.cpfCnpj" placeholder="Digite o CPF ou CNPJ" />
+        <div class="pessoa-fisica" v-if="ehPF=='true'">
+          <div>
+            <label>CPF:</label>
+            <input type="text" v-model="novoFornecedor.cpfCnpj" placeholder="Digite o CPF" />
+          </div>
         </div>
+        <div class="pessoa-juridica" v-else>
+          <div>
+            <label>CNPJ:</label>
+            <input type="text" v-model="novoFornecedor.cpfCnpj" placeholder="Digite o CNPJ" />
+          </div>
+        </div>
+    
         <div>
           <label>CEP:</label>
           <input type="text" v-model="novoFornecedor.cep" placeholder="Digite o CEP" />
@@ -20,14 +38,18 @@
           <label>Email:</label>
           <input type="text" v-model="novoFornecedor.email" placeholder="Digite o e-mail" />
         </div>
-        <div>
-          <label>RG:</label>
-          <input type="text" v-model="novoFornecedor.rg" placeholder="Digite o RG" />
+
+        <div class="pessoa-fisica" v-if="ehPF=='true'">
+          <div>
+            <label>RG:</label>
+            <input type="text" v-model="novoFornecedor.rg" placeholder="Digite o RG" />
+          </div>
+          <div>
+            <label>Data de Nascimento</label>
+            <input type="date" v-model="novoFornecedor.dataNascimento" placeholder="Digite a Data de Nascimento" />
+          </div>
         </div>
-        <div>
-          <label>Data de Nascimento</label>
-          <input type="date" v-model="novoFornecedor.dataNascimento" placeholder="Digite a Data de Nascimento" />
-        </div>
+
         <div class="botoes-form">
             <button type="submit" class="btn-form" id="btn-cadastrar">Cadastrar</button>
             <button class="btn-form" id="btn-fechar" @click="$emit('fechar')">Cancelar</button>
@@ -56,15 +78,14 @@ export default {
         cpfCnpj: '',
         email: '',
         cep: '',
-        rg: '',
+        rg: null,
         dataNascimento: ''
-      }
+      },
+      ehPF: "false"
     };
   },
   methods: {
     cadastrarFornecedor() {
-        console.log("apertou")
-        console.log(this.novoFornecedor)
       EmpresaService.createFornecedor(this.novoFornecedor)
         .then(() => {
           this.$emit('cadastrar');
@@ -144,6 +165,10 @@ input{
 
 #btn-cadastrar:hover {
   background: #0056b3;
+}
+
+div.pessoa-fisica, div.pessoa-juridica{
+  margin-bottom: 0;
 }
 
 </style>
