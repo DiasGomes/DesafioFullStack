@@ -20,19 +20,22 @@
         <div class="pessoa-fisica" v-if="ehPF=='true'">
           <div>
             <label>CPF:</label>
-            <input type="text" v-model="novoFornecedor.cpfCnpj" placeholder="Digite o CPF" />
+            <MaskInput  type="text" mask="###.###.###-##"
+              v-model="novoFornecedor.cpfCnpj" placeholder="Digite o CPF" />
           </div>
         </div>
         <div class="pessoa-juridica" v-else>
           <div>
             <label>CNPJ:</label>
-            <input type="text" v-model="novoFornecedor.cpfCnpj" placeholder="Digite o CNPJ" />
+            <MaskInput type="text" mask="##.###.###/####-##" 
+              v-model="novoFornecedor.cpfCnpj" placeholder="Digite o CNPJ" />
           </div>
         </div>
     
         <div>
           <label>CEP:</label>
-          <input type="text" v-model="novoFornecedor.cep" placeholder="Digite o CEP" />
+          <MaskInput type="text" mask="##.###-###" 
+            v-model="novoFornecedor.cep" placeholder="Digite o CEP" />
         </div>
         <div>
           <label>Email:</label>
@@ -42,7 +45,8 @@
         <div class="pessoa-fisica" v-if="ehPF=='true'">
           <div>
             <label>RG:</label>
-            <input type="text" v-model="novoFornecedor.rg" placeholder="Digite o RG" />
+            <MaskInput type="text" mask="AA-###.###.###"  
+              v-model="novoFornecedor.rg" placeholder="Digite o RG" />
           </div>
           <div>
             <label>Data de Nascimento</label>
@@ -62,6 +66,7 @@
 <script>
 
 import EmpresaService from '../services/EmpresaService';
+import { MaskInput } from 'vue-3-mask';
 
 export default {
   name: "Cadastra",
@@ -70,6 +75,9 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  components: {
+    MaskInput,
   },
   data() {
     return {

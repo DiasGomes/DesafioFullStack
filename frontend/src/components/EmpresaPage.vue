@@ -14,9 +14,9 @@
         <h1>{{ empresa.nomeFantasia }}</h1>
         <p>
           <strong>CNPJ:</strong> 
-          {{ formatarCpfCnpj(empresa.cnpj) }}
+          {{ empresa.cnpj }}
           <strong>CEP:</strong>
-          {{ formatarCEP(empresa.cep) }}
+          {{ empresa.cep }}
         </p>
       </div>
       
@@ -31,7 +31,7 @@
               </tr>
               <tr> 
                 <td><strong>CPF/CNPJ:</strong></td>  
-                <td>{{ formatarCpfCnpj(fornecedor.cpfCnpj) }}</td>
+                <td>{{ fornecedor.cpfCnpj }}</td>
               </tr>
               <tr>
                 <td><strong>E-mail:</strong></td>
@@ -39,7 +39,7 @@
               </tr>
               <tr> 
                 <td><strong>CEP:</strong></td> 
-                <td>{{ formatarCEP(fornecedor.cep) }}</td>
+                <td>{{ fornecedor.cep }}</td>
               </tr>
               <tr v-if="fornecedor.rg"> 
                 <td><strong>RG:</strong></td> 
@@ -86,33 +86,6 @@ export default {
       .catch(err => console.error(err));
   },
   methods: {
-    formatarCpfCnpj(c) {
-      if(c.length == 11){
-        // CPF
-        return c
-          .replace(/\D/g, "")
-          .replace(/(\d{3})(\d)/, "$1.$2")
-          .replace(/(\d{3})(\d)/, "$1.$2")
-          .replace(/(\d{3})(\d{2})$/, "$1-$2");
-      }else if(c.length == 14){
-        // CNPJ
-        return c
-          .replace(/\D/g, "")
-          .replace(/(\d{2})(\d)/, "$1.$2")
-          .replace(/(\d{3})(\d)/, "$1.$2")
-          .replace(/(\d{3})(\d)/, "$1/$2")
-          .replace(/(\d{4})(\d{2})/, "$1-$2");
-
-      }
-      return "";
-    },
-    formatarCEP(cep) {
-      if (!cep) return "";
-        return cep
-          .replace(/\D/g, "")
-          .replace(/(\d{2})(\d)/, "$1.$2")
-          .replace(/(\d{3})(\d{2})/, "$1-$2");
-    },
     abrirFormulario() {
       this.mostrarFormulario = true;
     },

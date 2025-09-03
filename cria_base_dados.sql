@@ -6,18 +6,18 @@ USE `DB_Desafio_Full_Stack`;
 
 CREATE TABLE fornecedor (
   id INT NOT NULL AUTO_INCREMENT,
-  cpf_cnpj VARCHAR(15) UNIQUE NOT NULL,
+  cpf_cnpj VARCHAR(18) UNIQUE NOT NULL,
   nome VARCHAR(50) NOT NULL,
   email VARCHAR(50) NOT NULL,
   cep VARCHAR(10) NOT NULL,
-  rg VARCHAR(15),
+  rg VARCHAR(14),
   data_nascimento DATE,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE empresa (
   id INT NOT NULL AUTO_INCREMENT,
-  cnpj VARCHAR(15) UNIQUE NOT NULL,
+  cnpj VARCHAR(18) UNIQUE NOT NULL,
   nome_fantasia VARCHAR(50) NOT NULL,
   cep VARCHAR(10) NOT NULL,
   PRIMARY KEY (id)
@@ -25,39 +25,39 @@ CREATE TABLE empresa (
 
 CREATE TABLE empresa_fornecedor (
   id INT NOT NULL AUTO_INCREMENT,
-  id_empresa VARCHAR(15) NOT NULL,
-  id_fornecedor VARCHAR(15) NOT NULL,
+  id_empresa int NOT NULL,
+  id_fornecedor int NOT NULL,
   PRIMARY KEY (id)
 );
 
 
 INSERT INTO fornecedor (id, cpf_cnpj, nome, email, cep, rg, data_nascimento)
 VALUES
-(1, '12345678902', 'Andy', 'Andy@g.com', '10111011', 'AA-11.222.333', STR_TO_DATE('31-08-2000', '%d-%m-%Y')),
-(2, '12345678903','Tom', 'Tom@g.com', '20111012', 'AA-22.222.333', STR_TO_DATE('01-03-1995', '%d-%m-%Y')),
-(3, '12345678904', 'April', 'April@g.com', '30111013', 'AA-33.222.333', STR_TO_DATE('03-10-1990', '%d-%m-%Y')),
-(4, '12345678905', 'Jerry', 'Jerry@g.com', '40111014', 'AA-44.222.333', STR_TO_DATE('11-02-2002', '%d-%m-%Y')),
-(5, '12345678906', 'Donna', 'Donna@g.com', '50111015', 'AA-55.222.333', STR_TO_DATE('29-12-2004', '%d-%m-%Y')),
-(6, '12345678907', 'Ana', 'Ana@g.com', '60111016', 'AA-66.222.333', STR_TO_DATE('17-10-1984', '%d-%m-%Y')),
-(7, '12345678908', 'Chris', 'Chris@g.com', '70111017', 'AA-77.222.333', STR_TO_DATE('07-07-1997', '%d-%m-%Y')),
-(8, '12345678901','Leslie', 'Leslie@g.com', '00111010', 'AA-88.222.333', STR_TO_DATE('14-09-2001', '%d-%m-%Y')),
-(9, '12345678909', 'Ben', 'Ben@g.com', '80111018', 'AA-99.222.333', STR_TO_DATE('19-11-2002', '%d-%m-%Y')),
-(10, '44440987654321', 'Leslie Corp', 'Leslie@Corp.com', '01234560', null, null),
-(11, '77210987654321', 'Ben 11', 'ben@Corp.com', '31234563', null, null),
-(12, '77310987654321', 'Andy Toys', 'buzz@Corp.com', '41234564', null, null),
-(13, '99210987654321', 'A Empresa do Malvado Doofenshmirtz', 'perry@Corp.com', '51234565', null, null),
-(14, '99910987654321', 'Ronaldo Corp', 'fenomeno@Corp.com', '77234567', null, null);
+(1, '123.456.789-02', 'Andy', 'Andy@g.com', '10.111-011', 'AA-11.222.333', STR_TO_DATE('31-08-2000', '%d-%m-%Y')),
+(2, '123.456.789-03','Tom', 'Tom@g.com', '20.111-012', 'AA-22.222.333', STR_TO_DATE('01-03-1995', '%d-%m-%Y')),
+(3, '123.456.789-04', 'April', 'April@g.com', '30.111-013', 'AA-33.222.333', STR_TO_DATE('03-10-1990', '%d-%m-%Y')),
+(4, '123.456.789-05', 'Jerry', 'Jerry@g.com', '40.111-014', 'AA-44.222.333', STR_TO_DATE('11-02-2002', '%d-%m-%Y')),
+(5, '123.456.789-06', 'Donna', 'Donna@g.com', '50.111-015', 'AA-55.222.333', STR_TO_DATE('29-12-2004', '%d-%m-%Y')),
+(6, '123.456.789-07', 'Ana', 'Ana@g.com', '60.111-016', 'AA-66.222.333', STR_TO_DATE('17-10-1984', '%d-%m-%Y')),
+(7, '123.456.789-08', 'Chris', 'Chris@g.com', '70.111-017', 'AA-77.222.333', STR_TO_DATE('07-07-1997', '%d-%m-%Y')),
+(8, '123.456.789-01','Leslie', 'Leslie@g.com', '00.111-010', 'AA-88.222.333', STR_TO_DATE('14-09-2001', '%d-%m-%Y')),
+(9, '123.456.789-09', 'Ben', 'Ben@g.com', '80.111-018', 'AA-99.222.333', STR_TO_DATE('19-11-2002', '%d-%m-%Y')),
+(10, '44.440.987/6543-21', 'Leslie Corp', 'Leslie@Corp.com', '01.234-560', null, null),
+(11, '77.210.987/6543-21', 'Ben 11', 'ben@Corp.com', '31.234-563', null, null),
+(12, '77.310.987/6543-21', 'Andy Toys', 'buzz@Corp.com', '41.234-564', null, null),
+(13, '99.210.987/6543-21', 'A Empresa do Malvado Doofenshmirtz', 'perry@Corp.com', '51.234-565', null, null),
+(14, '99.910.987/6543-21', 'Ronaldo Corp', 'fenomeno@Corp.com', '77.234-567', null, null);
 
 
 INSERT INTO empresa (id, cnpj, nome_fantasia, cep)
 VALUES
-(1, '44440987654321', 'Leslie Corp', '01234560'),
-(2, '44441987654321', 'Ron Industry', '11234561'),
-(3, '444210987654321', 'Tom & Jerry', '21234562'),
-(4, '77210987654321', 'Ben 11', '31234563'),
-(5, '77310987654321', 'Andy Toys', '41234564'),
-(6, '99210987654321', 'A Empresa do Malvado Doofenshmirtz', '51234565'),
-(7, '99910987654321', 'Ronaldo Corp', '77234567');
+(1, '44.440.987/6543-21', 'Leslie Corp', '01.234-560'),
+(2, '44.441.987/6543-21', 'Ron Industry', '11.234-561'),
+(3, '44.421.098/7654-21', 'Tom & Jerry', '21.234-562'),
+(4, '77.210.987/6543-21', 'Ben 11', '31.234-563'),
+(5, '77.310.987/6543-21', 'Andy Toys', '41.234-564'),
+(6, '99.210.987/6543-21', 'A Empresa do Malvado Doofenshmirtz', '51.234-565'),
+(7, '99.910.987/6543-21', 'Ronaldo Corp', '77.234-567');
 
 INSERT INTO empresa_fornecedor (id, id_empresa, id_fornecedor)
 VALUES

@@ -19,7 +19,7 @@
       <li v-for="empresa in empresas" :key="empresa.id">
         <router-link :to="`/empresa/${empresa.id}`">
           {{ empresa.nomeFantasia }}
-          {{ formatarCNPJ(empresa.cnpj) }}
+          {{ empresa.cnpj }}
         </router-link>
       </li>
     </ul>
@@ -53,15 +53,6 @@ export default {
           console.error("Erro ao buscar empresas:", error);
         });
     },
-    formatarCNPJ(cnpj) {
-      if (!cnpj) return "";
-        return cnpj
-          .replace(/\D/g, "")
-          .replace(/(\d{2})(\d)/, "$1.$2")
-          .replace(/(\d{3})(\d)/, "$1.$2")
-          .replace(/(\d{3})(\d{4})/, "$1/$2")
-          .replace(/(\d{4})(\d{2})$/, "$1-$2");
-    }
   }
 }
 </script>
