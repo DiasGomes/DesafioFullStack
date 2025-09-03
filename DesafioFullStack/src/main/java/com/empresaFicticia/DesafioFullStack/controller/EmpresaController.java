@@ -37,9 +37,21 @@ public class EmpresaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("")
-    public Fornecedor createFornecedor(@RequestBody Fornecedor body) {
-        return fornecedorRepository.save(body);
-    }
+    @PostMapping("/{id}")
+    public ResponseEntity<Fornecedor> createFornecedor(
+            @PathVariable Long id, @RequestBody Fornecedor body) {
+
+        return empresaRepository.findById(id).map(empresa -> {
+            // adiciona fornecedor
+            empresa.getFornecedores().add(body);
+
+            // salva fornecedor e empresa (dependendo do cascade)
+            Fornecedor saved = fornecedorRepository.save(body);
+            empresaRepository.save(empresa);
+
+            return ResponseEntity.ok(saved);
+        }).orElse(ResponseEntity.notFound().build());
+}
+
 
 }

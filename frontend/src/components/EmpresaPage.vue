@@ -23,31 +23,33 @@
       <div class="body-block"> 
       <ul v-if="empresa.fornecedores.length">
         <li v-for="fornecedor in empresa.fornecedores" :key="fornecedor.id">
-          <table class="block-fornecedor">
-            <tr> 
-              <td><strong>Fornecedor:</strong></td>
-              <td>{{ fornecedor.nome }}</td>
-            </tr>
-            <tr> 
-              <td><strong>CPF/CNPJ:</strong></td>  
-              <td>{{ formatarCpfCnpj(fornecedor.cpfCnpj) }}</td>
-            </tr>
-            <tr>
-              <td><strong>E-mail:</strong>  </td>
-              <td>{{ fornecedor.email}}</td>
-            </tr>
-            <tr> 
-              <td><strong>CEP:</strong> </td> 
-              <td>{{ formatarCEP(fornecedor.cep) }}</td>
-            </tr>
-            <tr v-if="fornecedor.rg"> 
-              <td><strong>RG:</strong> </td> 
-              <td>{{ fornecedor.rg }}</td>
-            </tr>
-            <tr v-if="fornecedor.dataNascimento"> 
-              <td><strong>Data de Nascimento:</strong>  </td>
-              <td>{{ fornecedor.dataNascimento }}</td>
-            </tr>
+          <table>
+            <tbody class="block-fornecedor">
+              <tr> 
+                <td><strong>Fornecedor:</strong></td>
+                <td>{{ fornecedor.nome }}</td>
+              </tr>
+              <tr> 
+                <td><strong>CPF/CNPJ:</strong></td>  
+                <td>{{ formatarCpfCnpj(fornecedor.cpfCnpj) }}</td>
+              </tr>
+              <tr>
+                <td><strong>E-mail:</strong></td>
+                <td>{{ fornecedor.email }}</td>
+              </tr>
+              <tr> 
+                <td><strong>CEP:</strong></td> 
+                <td>{{ formatarCEP(fornecedor.cep) }}</td>
+              </tr>
+              <tr v-if="fornecedor.rg"> 
+                <td><strong>RG:</strong></td> 
+                <td>{{ fornecedor.rg }}</td>
+              </tr>
+              <tr v-if="fornecedor.dataNascimento"> 
+                <td><strong>Data de Nascimento:</strong></td>
+                <td>{{ fornecedor.dataNascimento }}</td>
+              </tr>
+            </tbody>
           </table>
         </li>
       </ul>
@@ -58,6 +60,7 @@
     <Cadastra
       :mostrar="mostrarFormulario" 
       @fechar="fecharFormulario" 
+      @cadastrar="recarregarEmpresa"
     />
   </div>
 </template>
@@ -115,6 +118,13 @@ export default {
     },
     fecharFormulario() {
       this.mostrarFormulario = false;
+    },
+    recarregarEmpresa() {
+      EmpresaService.getEmpresaById(this.id)
+        .then(res => {
+          this.empresa = res.data;
+        })
+        .catch(err => console.error(err));
     }
   }
 };

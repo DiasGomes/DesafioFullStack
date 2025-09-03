@@ -86,7 +86,12 @@ export default {
   },
   methods: {
     cadastrarFornecedor() {
-      EmpresaService.createFornecedor(this.novoFornecedor)
+      const payload = {
+        fornecedor: this.novoFornecedor,
+        empresaId: this.$route.params.id
+      }
+      console.log(payload);
+      EmpresaService.createFornecedor(payload)
         .then(() => {
           this.$emit('cadastrar');
           this.$emit('fechar');

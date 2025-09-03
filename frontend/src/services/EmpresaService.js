@@ -14,8 +14,8 @@ class EmpresaService {
         });
     }
 
-    createFornecedor(fornecedor) {
-        return axios.post(EMPRESA_API_URL, fornecedor);
+    createFornecedor(payload) {
+        return axios.post(`${EMPRESA_API_URL}/${payload.empresaId}`, payload.fornecedor);
     }
 
 }
