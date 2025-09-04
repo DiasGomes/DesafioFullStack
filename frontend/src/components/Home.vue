@@ -20,16 +20,18 @@
 
     </div>
 
-    <ul v-if="empresas.length">
-      <li v-for="empresa in empresas" :key="empresa.id">
-        <router-link :to="`/empresa/${empresa.id}`">
-          {{ empresa.nomeFantasia }}
-          {{ empresa.cnpj }}
-        </router-link>
-      </li>
-    </ul>
+    <div class="lista-empresas">
+      <ul v-if="empresas.length">
+        <li v-for="empresa in empresas" :key="empresa.id">
+          <router-link :to="`/empresa/${empresa.id}`">
+            {{ empresa.nomeFantasia }}
+            {{ empresa.cnpj }}
+          </router-link>
+        </li>
+      </ul>
 
     <p v-else-if="buscou">Nenhuma empresa encontrada.</p>
+    </div>
   </div>
 </template>
 
@@ -127,6 +129,18 @@ button:hover {
   gap: 0.5rem;
 }
 
+.lista-empresas {
+  max-height: 250px;
+  overflow-y: auto; 
+  padding: 0.5rem;
+  border-radius: 6px;
+  background: rgb(19, 18, 18);
+}
+
+.lista-empresas::-webkit-scrollbar {
+  width: 10px;
+}
+
 ul {
   list-style: none;
   padding: 0;
@@ -154,5 +168,11 @@ a {
 a:hover {
   color: #007bff;
 }
+
+.erro{
+  color: #dc3545;
+  font-weight: bold;
+}
+
 
 </style>style

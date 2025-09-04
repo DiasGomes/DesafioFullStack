@@ -15,6 +15,16 @@ class EmpresaService {
         });
     }
 
+    searchFornecedores(query, nameOrCnpj) {
+        return axios.get(`${EMPRESA_API_URL}/search`, {
+            params: { q: query, noc: nameOrCnpj }
+        });
+    }
+
+    vincularFornecedor(payload) {
+        return axios.post(`${EMPRESA_API_URL}/${payload.empresaId}/fornecedores/${payload.fornecedorId}`);
+    }
+
     createFornecedor(payload) {
         return axios.post(`${EMPRESA_API_URL}/${payload.empresaId}`, payload.fornecedor);
     }

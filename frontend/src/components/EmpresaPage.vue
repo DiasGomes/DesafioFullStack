@@ -64,20 +64,29 @@
       @fechar="fecharFormulario" 
       @cadastrar="recarregarEmpresa"
     />
+
+    <Vinculo
+      :mostrar="mostrarVinculo" 
+      :empresa="empresa"
+      @fechar="fecharVinculo" 
+      @vincular="recarregarEmpresa"
+    />
   </div>
 </template>
 
 <script>
 import EmpresaService from '../services/EmpresaService';
 import Cadastra from './Cadastra.vue';
+import Vinculo from './Vinculo.vue';
 
 export default {
-  components: { Cadastra },
+  components: { Cadastra, Vinculo },
   props: ['id'],
   data() {
     return {
       empresa: null,
       mostrarFormulario: false,
+      mostrarVinculo: false
     };
   },
   created() {
@@ -93,6 +102,12 @@ export default {
     },
     fecharFormulario() {
       this.mostrarFormulario = false;
+    },
+    abrirVinculo() {
+      this.mostrarVinculo = true;
+    },
+    fecharVinculo() {
+      this.mostrarVinculo = false;
     },
     recarregarEmpresa() {
       EmpresaService.getEmpresaById(this.id)
