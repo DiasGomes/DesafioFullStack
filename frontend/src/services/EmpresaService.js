@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-const HOME_API_URL = 'http://localhost:8080/home';
-const EMPRESA_API_URL = 'http://localhost:8080/empresa';
+const apiUrl = import.meta.env.VITE_API_URL
+const HOME_API_URL = apiUrl + '/home';
+const EMPRESA_API_URL = apiUrl + '/empresa';
 
 class EmpresaService {
     getEmpresaById(id) {
